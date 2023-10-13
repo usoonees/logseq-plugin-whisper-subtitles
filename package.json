@@ -1,0 +1,21 @@
+{
+  "name": "logseq-plugin-whisper-subtitles",
+  "version": "1.0.0",
+  "main": "dist/index.html",
+  "logseq": {
+    "title": "Logseq Whisper Subtitles",
+    "id": "_usoon-logseq-whisper-subtitles",
+    "icon": "./icon.png"
+  },
+  "scripts": {
+    "start": "wmr",
+    "build": "wmr build",
+    "serve": "wmr serve"
+  },
+  "dependencies": {
+    "@logseq/libs": "^0.0.10"
+  },
+  "devDependencies": {
+    "wmr": "^3.7.2"
+  }
+}
