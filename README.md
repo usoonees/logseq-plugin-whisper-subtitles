@@ -13,7 +13,10 @@
 * If working with local videos and wish to utilize the timestamp navigation feature, ensure logseq-plugin-media-ts is installed.
 
 ### Demo
-![Demo](demo.mp4)
+### Youtube Demo
+![Youtube Demo](youtube_demo.gif)
+### Local Video Demo
+![Local Demo](local_video.gif)
 
 ### Related Repository
 * [logseq-whisper-subtitles-server](https://github.com/usoonees/logseq-whisper-subtitles-server) - The local web server running whisper, which is required to extract voice from videos and subsequently extract text from the voice.
