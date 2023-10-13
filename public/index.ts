@@ -75,6 +75,10 @@ export async function runWhisper(b: IHookEvent) {
           let content = transcribe.segment;
           if(source == "youtube") {
             content = `{{youtube-timestamp ${transcribe.startTime}}} ${content}`
+          } else if (source == "local") {
+            content = `{{renderer :media-timestamp, ${transcribe.startTime}}} ${content}`
+          } else {
+            logseq.UI.showMsg("source not supported yet", "warn");
           }
           const block: IBatchBlock = {
             content: content,
@@ -93,19 +97,21 @@ export async function runWhisper(b: IHookEvent) {
 
       }
     } catch (e: any) {
-      logseq.App.showMsg("get whisper subtitles failed", "error");
+      logseq.UI.showMsg("get whisper subtitles failed", "error");
     }
   }
 }
 
 export async function localWhisper(content: string, openAiOptions:WhisperOptions): Promise<TranscriptionResponse> {
   const baseUrl = openAiOptions.whisperLocalEndpoint ? openAiOptions.whisperLocalEndpoint : "http://127.0.0.1:5014";
+  const graph = await logseq.App.getCurrentGraph();
 
   // Create a FormData object and append the file
   const formData = new FormData();
   formData.append('model_name', openAiOptions.modelName);
   formData.append('min_length', openAiOptions.minLength);
   formData.append('text', content);
+  formData.append('graph_path', graph.path);
 
   // Send a request to the OpenAI API using a form post
   const response = await fetch(baseUrl + '/transcribe', {
