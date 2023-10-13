@@ -26,8 +26,8 @@ logseq.useSettingsSchema([
     key: "whisperLocalEndpoint",
     title: "logseq-whisper-subtitles-server endpoint",
     type: "string",
-    default: "http://127.0.0.1:5014", // default to false
-    description: "",
+    default: "http://127.0.0.1:5014",
+    description: "End point of logseq-whisper-subtitles-server",
   },
   {
     key: "modelSize",
@@ -40,7 +40,7 @@ logseq.useSettingsSchema([
     key: "minLength",
     title: "Minimum length of a segment",
     type: "number",
-    default: 200, // default to false
+    default: 100,
     description: "if set to zero, segments will be split by .?!, otherwise, segments less than minLength will be merged",
   },
 ])
