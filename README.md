@@ -4,7 +4,7 @@
 
 * You can then view the extracted subtitles along with timestamps. 
 
-* Currently, the plugin supports both YouTube videos and local video files. For the timestamp navigation functionality in local videos, an additional plugin logseq-plugin-media-ts needs to be installed.
+* Currently, the plugin supports both YouTube videos and local video files. For the timestamp navigation functionality in local videos, an additional plugin [logseq-plugin-media-ts](https://github.com/sethyuan/logseq-plugin-media-ts) needs to be installed.
 
 
 ### Usage
