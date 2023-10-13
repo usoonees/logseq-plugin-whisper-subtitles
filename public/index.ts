@@ -17,30 +17,31 @@ interface TranscriptionSegment {
 interface TranscriptionResponse {
   segments: TranscriptionSegment[];
   source: string;
+  error: string;
 }
 
 
 logseq.useSettingsSchema([
   {
     key: "whisperLocalEndpoint",
-    title: "Highlight Color",
+    title: "logseq-whisper-subtitles-server endpoint",
     type: "string",
     default: "http://127.0.0.1:5014", // default to false
     description: "",
   },
   {
-    key: "modelName",
-    title: "Highlight Color in Dark Mode",
+    key: "modelSize",
+    title: "Whisper model size",
     type: "string",
     default: "base",
-    description: "",
+    description: "tiny, base, small, medium, large",
   },
   {
     key: "minLength",
-    title: "Whether to highlight references in linked references",
+    title: "Minimum length of a segment",
     type: "number",
-    default: 0, // default to false
-    description: "",
+    default: 200, // default to false
+    description: "if set to zero, segments will be split by .?!, otherwise, segments less than minLength will be merged",
   },
 ])
 
@@ -69,6 +70,11 @@ export async function runWhisper(b: IHookEvent) {
     const whisperSettings = getWhisperSettings();
     try {
       const transcribes = await localWhisper(currentBlock.content, whisperSettings);
+      if(transcribes.error) {
+        logseq.UI.showMsg(transcribes.error, "error");
+        return;
+      }
+
       if (transcribes) {
         const source = transcribes.source;
         const blocks = transcribes.segments.map((transcribe) => {
