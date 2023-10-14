@@ -7,6 +7,7 @@ interface WhisperOptions {
   modelName?: string;
   // segmentSymbols?: string[];
   minLength?: string;
+  zhType?: string;
 }
 
 interface TranscriptionSegment {
@@ -43,18 +44,26 @@ logseq.useSettingsSchema([
     default: 100,
     description: "if set to zero, segments will be split by .?!, otherwise, segments less than minLength will be merged",
   },
+  {
+    key: "zhType",
+    title: "Chinese language type",
+    type: "string",
+    default: "zh-cn",
+    description: "zh-cn and zh-tw",
+  },
 ])
 
 export function getWhisperSettings(): WhisperOptions {
   const whisperLocalEndpoint = logseq.settings!["whisperLocalEndpoint"];
   const modelName = logseq.settings!["modelName"];
-  // const segmentSymbols = logseq.settings!["segmentSymbols"];
   const minLength = logseq.settings!["minLength"];
+  const zhType = logseq.settings!["zhType"];
   return {
     whisperLocalEndpoint,
     modelName,
     // segmentSymbols,
     minLength,
+    zhType,
   };
 }
 
@@ -122,6 +131,7 @@ export async function localWhisper(content: string, whisperOptions:WhisperOption
   formData.append('model_name', whisperOptions.modelName);
   formData.append('min_length', whisperOptions.minLength);
   formData.append('text', content);
+  formData.append('zh_type', whisperOptions.zhType)
   formData.append('graph_path', graph.path);
 
   // Send a request to the OpenAI API using a form post
