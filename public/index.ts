@@ -103,19 +103,24 @@ export async function runWhisper(b: IHookEvent) {
 
       }
     } catch (e: any) {
-      logseq.UI.showMsg("get whisper subtitles failed", "error");
+      console.log(e)
+      if(e.message == "Failed to fetch") {
+        logseq.UI.showMsg("make sure logseq-whisper-subtitles-server is running", "error");
+      } else {
+        logseq.UI.showMsg("fail to transcribe: "+e.message, "error");
+      }
     }
   }
 }
 
-export async function localWhisper(content: string, openAiOptions:WhisperOptions): Promise<TranscriptionResponse> {
-  const baseUrl = openAiOptions.whisperLocalEndpoint ? openAiOptions.whisperLocalEndpoint : "http://127.0.0.1:5014";
+export async function localWhisper(content: string, whisperOptions:WhisperOptions): Promise<TranscriptionResponse> {
+  const baseUrl = whisperOptions.whisperLocalEndpoint ? whisperOptions.whisperLocalEndpoint : "http://127.0.0.1:5014";
   const graph = await logseq.App.getCurrentGraph();
 
   // Create a FormData object and append the file
   const formData = new FormData();
-  formData.append('model_name', openAiOptions.modelName);
-  formData.append('min_length', openAiOptions.minLength);
+  formData.append('model_name', whisperOptions.modelName);
+  formData.append('min_length', whisperOptions.minLength);
   formData.append('text', content);
   formData.append('graph_path', graph.path);
 

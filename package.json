@@ -1,6 +1,6 @@
 {
   "name": "logseq-plugin-whisper-subtitles",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "dist/index.html",
   "logseq": {
     "title": "Logseq Whisper Subtitles",
