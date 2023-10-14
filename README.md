@@ -14,11 +14,13 @@
 
 ### Demo
 ### Youtube Demo
-![Youtube Demo](youtube_demo.gif)
+![Youtube Demo](demos/youtube_demo.gif)
 ### Local Video Demo
-![Local Video Demo](local_video.gif)
+![Local Video Demo](demos/local_video.gif)
 ### Local Audio Demo
-![Local Audio Demo](local_audio.gif)
+![Local Audio Demo](demos/local_audio.gif)
+### Chinese Demo
+![Chinese Demo](demos/cn_demo.gif)
 
 ### Related Repository
 * [logseq-whisper-subtitles-server](https://github.com/usoonees/logseq-whisper-subtitles-server) - The local web server running whisper, which is required to extract voice from videos and subsequently extract text from the voice.
