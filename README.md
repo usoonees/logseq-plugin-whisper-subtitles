@@ -1,6 +1,6 @@
 # logseq-plugin-whisper-subtitles
 ## Overview
-* This plugin allows users to extract subtitles from videos by interfacing with **[a local web server](https://github.com/usoonees/logseq-whisper-subtitles-server)** that running whisper service, **without calling OpenAI whisper API**.
+* This plugin allows users to extract **subtitles with timestamp** from videos by interfacing with **[a local web server](https://github.com/usoonees/logseq-whisper-subtitles-server)** that running whisper service, **without calling OpenAI whisper API**.
 
 * You can then view the extracted subtitles along with timestamps. 
 
