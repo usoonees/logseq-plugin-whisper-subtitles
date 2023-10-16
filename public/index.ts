@@ -77,18 +77,20 @@ export async function runWhisper(b: IHookEvent) {
   const currentBlock = await logseq.Editor.getBlock(b.uuid);
   if (currentBlock) {
     const whisperSettings = getWhisperSettings();
+    popupUI(); // show popup
     try {
       const transcribes = await localWhisper(currentBlock.content, whisperSettings);
-      if(transcribes.error) {
+      if (transcribes.error) {
         logseq.UI.showMsg(transcribes.error, "error");
         return;
       }
 
       if (transcribes) {
+        removePopupUI(); // remove popup
         const source = transcribes.source;
         const blocks = transcribes.segments.map((transcribe) => {
           let content = transcribe.segment;
-          if(source == "youtube") {
+          if (source == "youtube") {
             content = `{{youtube-timestamp ${transcribe.startTime}}} ${content}`
           } else if (source == "local") {
             content = `{{renderer :media-timestamp, ${transcribe.startTime}}} ${content}`
@@ -113,16 +115,16 @@ export async function runWhisper(b: IHookEvent) {
       }
     } catch (e: any) {
       console.log(e)
-      if(e.message == "Failed to fetch") {
+      if (e.message == "Failed to fetch") {
         logseq.UI.showMsg("make sure logseq-whisper-subtitles-server is running", "error");
       } else {
-        logseq.UI.showMsg("fail to transcribe: "+e.message, "error");
+        logseq.UI.showMsg("fail to transcribe: " + e.message, "error");
       }
     }
   }
 }
 
-export async function localWhisper(content: string, whisperOptions:WhisperOptions): Promise<TranscriptionResponse> {
+export async function localWhisper(content: string, whisperOptions: WhisperOptions): Promise<TranscriptionResponse> {
   const baseUrl = whisperOptions.whisperLocalEndpoint ? whisperOptions.whisperLocalEndpoint : "http://127.0.0.1:5014";
   const graph = await logseq.App.getCurrentGraph();
 
@@ -151,5 +153,54 @@ export async function localWhisper(content: string, whisperOptions:WhisperOption
 }
 
 
+//----popup
+const keyNamePopup = "whisper--popup";
+
+// Create popup
+const popupUI = () => {
+
+  //　Message
+  let printMain = `
+  Processing...
+  `;
+
+  // Create popup
+  logseq.provideUI({
+    attrs: {
+      title: "Whisper subtitles plugin",
+    },
+    key: keyNamePopup,
+    reset: true,
+    style: {
+      width: "300px",
+      height: "300px",
+      overflowY: "auto",
+      left: "unset",
+      bottom: "unset",
+      right: "1em",
+      top: "4em",
+      paddingLeft: "2em",
+      paddingTop: "2em",
+      backgroundColor: 'var(--ls-primary-background-color)',
+      color: 'var(--ls-primary-text-color)',
+      boxShadow: '1px 2px 5px var(--ls-secondary-background-color)',
+    },
+    //<button class="button" id="whisperSubtitles--showSettingsUI" title="plugin settings">⚙️</button>
+    template: `
+        <div title="">
+            ${printMain}
+        </div>
+        `,
+
+  });
+  //setTimeout(() => {
+  //plugin settings
+  // const showSettingsUI = parent.document.getElementById("whisperSubtitles--showSettingsUI") as HTMLButtonElement | null;
+  // if (showSettingsUI) showSettingsUI.addEventListener("click", () => logseq.showSettingsUI(), { once: true });
+  //}, 50);
+};
+// Remove popup
+const removePopupUI = () => parent.document.getElementById(logseq.baseInfo.id + "--" + keyNamePopup)?.remove();
+//----end popup
 
 logseq.ready(main).catch(console.error)
