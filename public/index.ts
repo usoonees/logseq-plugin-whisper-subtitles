@@ -83,13 +83,13 @@ export async function runWhisper(b: IHookEvent) {
     popupUI(); // show popup
     try {
       const transcribes = await localWhisper(currentBlock.content, whisperSettings);
+      removePopupUI(); // remove popup
       if (transcribes.error) {
         logseq.UI.showMsg(transcribes.error, "error");
         return;
       }
 
       if (transcribes) {
-        removePopupUI(); // remove popup
         const source = transcribes.source;
         const blocks = transcribes.segments.map((transcribe) => {
           let content = transcribe.segment;
