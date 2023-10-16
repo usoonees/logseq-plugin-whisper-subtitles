@@ -51,8 +51,9 @@ async function main() {
     {
       key: "modelSize",
       title: t("Whisper model size"),
-      type: "string",
+      type: "enum",
       default: "base",
+      enumChoices: ["tiny", "base", "small", "medium", "large"],
       description: "tiny, base, small, medium, large",
     },
     {
@@ -65,8 +66,9 @@ async function main() {
     {
       key: "zhType",
       title: t("Chinese language type"),
-      type: "string",
+      type: "enum",
       default: "zh-cn",
+      enumChoices: ["zh-cn", "zh-tw"],
       description: "zh-cn and zh-tw",
     },
   ])
