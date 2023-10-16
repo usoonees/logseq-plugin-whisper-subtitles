@@ -80,7 +80,16 @@ export async function runWhisper(b: IHookEvent) {
   const currentBlock = await logseq.Editor.getBlock(b.uuid);
   if (currentBlock) {
     const whisperSettings = getWhisperSettings();
-    popupUI(); // show popup
+
+    // show popup
+    popupUI(`
+    <div id="whisper-subtitles-loader-container">
+      <div id="whisper-subtitles-loader"></div>
+      <p data-message="processing">${t("Processing...")}</p>
+    </div>
+    <p> ${t("It will take a few minutes.")}</p>
+    `, currentBlock.uuid); // dot select
+
     try {
       const transcribes = await localWhisper(currentBlock.content, whisperSettings);
       removePopupUI(); // remove popup
@@ -156,18 +165,31 @@ export async function localWhisper(content: string, whisperOptions: WhisperOptio
 }
 
 
-//----popup
-const keyNamePopup = "whisper--popup";
+//----popup UI
+
+const keyNamePopup = "whisper--popup"; // key name for popup
+
+// Update message
+// Use this when a popup is displayed and you want to change the message midway through.
+const updatePopupUI = (messageHTML: string) => {
+  const messageEl = parent.document.getElementById("whisperSubtitles--message") as HTMLDivElement | null;
+  if (messageEl) messageEl.innerHTML = messageHTML; // if popup is already displayed, update message
+  else popupUI(messageHTML); // if popup is not displayed, create popup with message
+};
 
 // Create popup
-const popupUI = () => {
-
-  //　Message
-  let printMain = `
-  ${t("Processing...")}
-  `;
-
-  // Create popup
+const popupUI = (printMain: string, targetBlockUuid?: string) => {
+  // dot select
+  const dotSelect = targetBlockUuid ? `
+  &#root>div {
+    &.light-theme>main>div span#dot-${targetBlockUuid}{
+        outline: 2px solid var(--ls-link-ref-text-color);
+    }
+    &.dark-theme>main>div span#dot-${targetBlockUuid}{
+        outline: 2px solid aliceblue;
+    }
+  }
+  ` : "";
   logseq.provideUI({
     attrs: {
       title: "Whisper subtitles plugin",
@@ -175,8 +197,9 @@ const popupUI = () => {
     key: keyNamePopup,
     reset: true,
     style: {
-      width: "300px",
-      height: "300px",
+      width: "330px", // width
+      minHeight: "220px", // min-height
+      maxHeight: "400px", // max-height
       overflowY: "auto",
       left: "unset",
       bottom: "unset",
@@ -188,22 +211,71 @@ const popupUI = () => {
       color: 'var(--ls-primary-text-color)',
       boxShadow: '1px 2px 5px var(--ls-secondary-background-color)',
     },
-    //<button class="button" id="whisperSubtitles--showSettingsUI" title="plugin settings">⚙️</button>
     template: `
         <div title="">
+            <p>Whisper subtitles ${t("plugin")} <button class="button" id="whisperSubtitles--showSettingsUI" title="${t("plugin settings")}">⚙️</button></p>
+            <div id="whisperSubtitles--message">
             ${printMain}
+            </div>
         </div>
+        <style>
+      body>div {
+        ${dotSelect}
+        &#${logseq.baseInfo.id}--${keyNamePopup} {
+          & button.button#whisperSubtitles--showSettingsUI {
+            display: unset;
+          }
+          & div#whisperSubtitles--message {
+            &>div#whisper-subtitles-loader-container {
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              flex-direction: column;
+              width: 100px;
+              height: 100px;
+              &>div#whisper-subtitles-loader {
+                border: 15px solid #39d4ff;
+                border-radius: 50%;
+                width: 60px;
+                height: 60px;
+                animation: spin 2s linear infinite;
+              }
+              &>p[data-message="processing"] {
+                font-size: 1.2em;
+                line-height: 1.5em;
+              }
+            }
+          }
+        }
+      }
+        @keyframes spin{
+          0%{
+            transform: rotate(0deg);
+          }
+          50%{
+            transform: rotate(180deg);
+            border-radius: 0%;
+            width: 20px;
+            height: 20px;
+            border: 5px double #061fd5;
+          }
+          100%{
+            transform: rotate(360deg);
+          }
+        }
+        </style>
         `,
-
   });
-  //setTimeout(() => {
-  //plugin settings
-  // const showSettingsUI = parent.document.getElementById("whisperSubtitles--showSettingsUI") as HTMLButtonElement | null;
-  // if (showSettingsUI) showSettingsUI.addEventListener("click", () => logseq.showSettingsUI(), { once: true });
-  //}, 50);
+  setTimeout(() => {
+    //plugin settings button
+    const showSettingsUI = parent.document.getElementById("whisperSubtitles--showSettingsUI") as HTMLButtonElement | null;
+    if (showSettingsUI) showSettingsUI.addEventListener("click", () => logseq.showSettingsUI(), { once: true });
+  }, 50);
 };
-// Remove popup
+
+// Remove popup from DOM
 const removePopupUI = () => parent.document.getElementById(logseq.baseInfo.id + "--" + keyNamePopup)?.remove();
-//----end popup
+
+//----end popup UI
 
 logseq.ready(main).catch(console.error)

@@ -9,5 +9,8 @@
     "source not supported yet": "このソース(動画など)はまだサポートされていません",
     "make sure logseq-whisper-subtitles-server is running": "logseq-whisper-subtitles-serverが起動していることを確認してください",
     "fail to transcribe: ": "文字起こしに失敗しました: ",
-    "Processing...": "処理中..."
+    "Processing...": "処理中...",
+    "plugin settings": "プラグイン設定",
+    "plugin": "プラグイン",
+    "It will take a few minutes.": "数分かかります。"
 }
