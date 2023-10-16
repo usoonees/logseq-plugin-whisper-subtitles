@@ -8,6 +8,9 @@ dependencies:
   '@logseq/libs':
     specifier: ^0.0.15
     version: 0.0.15
+  logseq-l10n:
+    specifier: ^0.2.0
+    version: 0.2.0(@logseq/libs@0.0.15)
 
 devDependencies:
   wmr:
@@ -80,6 +83,14 @@ packages:
 
   /lodash-es@4.17.21:
     resolution: {integrity: sha512-mKnC+QJ9pWVzv+C4/U3rRsHapFfHvQFoFB92e52xeyGMcX6/OlIl78je1u8vePzYZSkkogMPJ2yjxxsb89cxyw==}
+    dev: false
+
+  /logseq-l10n@0.2.0(@logseq/libs@0.0.15):
+    resolution: {integrity: sha512-exBSvxVijlAW6Zy6eYRWGroJL3qxAouCZqSQzAeIRuoIU8nA0vN2S2+5slvWTFM159hlqhtdJXqudwgCs4y2Vg==}
+    peerDependencies:
+      '@logseq/libs': '>= 0.0.1-alpha.33'
+    dependencies:
+      '@logseq/libs': 0.0.15
     dev: false
 
   /lower-case@2.0.2:

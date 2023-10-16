@@ -1,4 +1,6 @@
-import "@logseq/libs"
+import "@logseq/libs";
+import { setup as l10nSetup, t } from "logseq-l10n"; //https://github.com/sethyuan/logseq-l10n
+import ja from "./translations/ja.json";
 import { IBatchBlock } from "@logseq/libs/dist/LSPlugin.user";
 import { IHookEvent } from "@logseq/libs/dist/LSPlugin.user";
 
@@ -21,38 +23,6 @@ interface TranscriptionResponse {
   error: string;
 }
 
-
-logseq.useSettingsSchema([
-  {
-    key: "whisperLocalEndpoint",
-    title: "logseq-whisper-subtitles-server endpoint",
-    type: "string",
-    default: "http://127.0.0.1:5014",
-    description: "End point of logseq-whisper-subtitles-server",
-  },
-  {
-    key: "modelSize",
-    title: "Whisper model size",
-    type: "string",
-    default: "base",
-    description: "tiny, base, small, medium, large",
-  },
-  {
-    key: "minLength",
-    title: "Minimum length of a segment",
-    type: "number",
-    default: 100,
-    description: "if set to zero, segments will be split by .?!, otherwise, segments less than minLength will be merged",
-  },
-  {
-    key: "zhType",
-    title: "Chinese language type",
-    type: "string",
-    default: "zh-cn",
-    description: "zh-cn and zh-tw",
-  },
-])
-
 export function getWhisperSettings(): WhisperOptions {
   const whisperLocalEndpoint = logseq.settings!["whisperLocalEndpoint"];
   const modelName = logseq.settings!["modelName"];
@@ -68,9 +38,40 @@ export function getWhisperSettings(): WhisperOptions {
 }
 
 async function main() {
-  console.log("whisper-subtitles loaded")
-  logseq.Editor.registerSlashCommand("whisper-subtitles", runWhisper);
-  logseq.Editor.registerBlockContextMenuItem("whisper-subtitles", runWhisper);
+  console.log("whisper-subtitles loaded");
+  await l10nSetup({ builtinTranslations: { ja } });
+  logseq.useSettingsSchema([
+    {
+      key: "whisperLocalEndpoint",
+      title: t("logseq-whisper-subtitles-server endpoint"),
+      type: "string",
+      default: "http://127.0.0.1:5014",
+      description: t("End point of logseq-whisper-subtitles-server"),
+    },
+    {
+      key: "modelSize",
+      title: t("Whisper model size"),
+      type: "string",
+      default: "base",
+      description: "tiny, base, small, medium, large",
+    },
+    {
+      key: "minLength",
+      title: t("Minimum length of a segment"),
+      type: "number",
+      default: 100,
+      description: t("if set to zero, segments will be split by .?!, otherwise, segments less than minLength will be merged"),
+    },
+    {
+      key: "zhType",
+      title: t("Chinese language type"),
+      type: "string",
+      default: "zh-cn",
+      description: "zh-cn and zh-tw",
+    },
+  ])
+  logseq.Editor.registerSlashCommand(t("whisper-subtitles"), runWhisper);
+  logseq.Editor.registerBlockContextMenuItem(t("whisper-subtitles"), runWhisper);
 }
 
 export async function runWhisper(b: IHookEvent) {
@@ -95,7 +96,7 @@ export async function runWhisper(b: IHookEvent) {
           } else if (source == "local") {
             content = `{{renderer :media-timestamp, ${transcribe.startTime}}} ${content}`
           } else {
-            logseq.UI.showMsg("source not supported yet", "warn");
+            logseq.UI.showMsg(t("source not supported yet"), "warn");
           }
           const block: IBatchBlock = {
             content: content,
@@ -116,9 +117,9 @@ export async function runWhisper(b: IHookEvent) {
     } catch (e: any) {
       console.log(e)
       if (e.message == "Failed to fetch") {
-        logseq.UI.showMsg("make sure logseq-whisper-subtitles-server is running", "error");
+        logseq.UI.showMsg(t("make sure logseq-whisper-subtitles-server is running"), "error");
       } else {
-        logseq.UI.showMsg("fail to transcribe: " + e.message, "error");
+        logseq.UI.showMsg(t("fail to transcribe: ") + e.message, "error");
       }
     }
   }
@@ -161,7 +162,7 @@ const popupUI = () => {
 
   //　Message
   let printMain = `
-  Processing...
+  ${t("Processing...")}
   `;
 
   // Create popup

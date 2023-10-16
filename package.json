@@ -13,7 +13,8 @@
     "serve": "wmr serve"
   },
   "dependencies": {
-    "@logseq/libs": "^0.0.15"
+    "@logseq/libs": "^0.0.15",
+    "logseq-l10n": "^0.2.0"
   },
   "devDependencies": {
     "wmr": "^3.8.0"
