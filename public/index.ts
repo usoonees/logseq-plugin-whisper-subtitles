@@ -129,7 +129,7 @@ export async function runWhisper(b: IHookEvent) {
       removePopupUI(); // remove popup
       console.log(e)
       if (e.message == "Failed to fetch") {
-        logseq.UI.showMsg(t("make sure logseq-whisper-subtitles-server is running"), "error");
+        logseq.UI.showMsg(t("Could not receive from server.\n\nMake sure \"logseq-whisper-subtitles-server\" is running"), "error");
       } else {
         logseq.UI.showMsg(t("fail to transcribe: ") + e.message, "error");
       }

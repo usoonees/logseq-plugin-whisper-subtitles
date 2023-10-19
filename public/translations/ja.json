@@ -7,7 +7,7 @@
     "Chinese language type": "中国語の言語タイプ (この項目は、変更不要です！)",
     "whisper-subtitles": "文字起こし (Whisper-Subtitles)",
     "source not supported yet": "このソース(動画など)はまだサポートされていません",
-    "make sure logseq-whisper-subtitles-server is running": "logseq-whisper-subtitles-serverが起動していることを確認してください",
+    "Could not receive from server.\n\nMake sure \"logseq-whisper-subtitles-server\" is running": "サーバーから受信できませんでした。このプラグイン専用の Whisper処理サーバー が起動していることを確認してください",
     "fail to transcribe: ": "文字起こしに失敗しました: ",
     "Processing...": "処理中...",
     "plugin settings": "プラグイン設定",
