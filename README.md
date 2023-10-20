@@ -25,13 +25,16 @@
 
 ### Demo
 #### YouTube Embedded in a Block
-![Youtube Demo](demos/youtube_demo.gif)
+https://github.com/usoonees/logseq-plugin-whisper-subtitles/assets/56818734/906a5678-6ee3-4eda-bbb3-7bc4e41fc633
+
 #### Video File Embedded in a Block (Local)
-![Local Video Demo](demos/local_video.gif)
+https://github.com/usoonees/logseq-plugin-whisper-subtitles/assets/56818734/035ac468-064c-45fb-813b-932d6502f693
+
 #### Audio Embedded in a Block (Local)
-![Local Audio Demo](demos/local_audio.gif)
-### Chinese Demo
-![Chinese Demo](demos/cn_demo.gif)
+https://github.com/usoonees/logseq-plugin-whisper-subtitles/assets/56818734/992e82fc-8042-4c9a-abb1-6250fb259579
+
+#### Chinese Demo
+https://github.com/usoonees/logseq-plugin-whisper-subtitles/assets/56818734/3a6da75c-4e28-46a2-b209-6c9914baf35a
 
 ### Related Repository
 * [logseq-whisper-subtitles-server](https://github.com/usoonees/logseq-whisper-subtitles-server) - The local web server running whisper, which is required to extract voice from videos and subsequently extract text from the voice.
