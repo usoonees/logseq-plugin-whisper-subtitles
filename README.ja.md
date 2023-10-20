@@ -1,5 +1,5 @@
 # logseq-plugin-whisper-subtitles
-(Logseq用プラグイン) Whisper文字起こし [English](https://github.com/usoonees/logseq-whisper-subtitles-server) | [日本語](https://github.com/usoonees/logseq-whisper-subtitles-server/blob/main/README.ja.md)
+(Logseq用プラグイン) Whisper文字起こし [English](README.md) | [日本語](README.ja.md)
 
 ### 概要
 

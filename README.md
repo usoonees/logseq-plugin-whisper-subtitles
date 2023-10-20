@@ -1,6 +1,6 @@
 # logseq-plugin-whisper-subtitles
 
-[English](https://github.com/usoonees/logseq-whisper-subtitles-server) | [日本語](https://github.com/usoonees/logseq-whisper-subtitles-server/blob/main/README.ja.md)
+[English](README.md) | [日本語](README.ja.md)
 
 ### Overview
 
