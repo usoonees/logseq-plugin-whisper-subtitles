@@ -1,16 +1,18 @@
 {
-    "logseq-whisper-subtitles-server endpoint": "サーバーエンドポイント (通常、変更不要です)",
-    "End point of logseq-whisper-subtitles-server": "このプラグインは、サーバーを起動させた状態でないと動作しません。(デフォルト: http://127.0.0.1:5014)",
+    "End point of logseq-whisper-subtitles-server": "サーバーエンドポイント (通常、変更不要です)",
+    "default: http://127.0.0.1:5014": "デフォルト: http://127.0.0.1:5014",
     "Whisper model size": "Whisperモデルのサイズ (デフォルト: base)",
-    "Minimum length of a segment": "セグメントの最小長 (デフォルト: 1)",
-    "if set to zero, segments will be split by .?!, otherwise, segments less than minLength will be merged": "0に設定すると、セグメントは.?!,で分割されます。それ以外の場合、minLength未満のセグメントはマージされます。",
+    "Minimum length of a segment": "最小セグメント (デフォルト: 1)",
+    "if set to zero, segments will be split by .?!, otherwise, segments less than minLength will be merged": "この設定未満のセグメントは合成されます。0をセットすると、セグメントは「 . ? ! , 」で分割されます。",
     "Chinese language type": "中国語の言語タイプ (この項目は、変更不要です！)",
     "whisper-subtitles": "文字起こし (Whisper-Subtitles)",
-    "source not supported yet": "このソース(動画など)はまだサポートされていません",
-    "make sure logseq-whisper-subtitles-server is running": "logseq-whisper-subtitles-serverが起動していることを確認してください",
+    "source not supported yet": "このソースは、まだサポートされていません",
+    "Could not receive from server.\n\nMake sure \"logseq-whisper-subtitles-server\" is running": "サーバーから受信できませんでした。このプラグイン専用の Whisper処理サーバー が起動していることを確認してください",
     "fail to transcribe: ": "文字起こしに失敗しました: ",
     "Processing...": "処理中...",
     "plugin settings": "プラグイン設定",
     "plugin": "プラグイン",
-    "It will take a few minutes.": "数分かかります。"
+    "It will take a few minutes.": "数分かかります。",
+    "This plugin requires a dedicated server that runs in the background. Please start it locally. [README](https://github.com/usoonees/logseq-whisper-subtitles-server)": "このプラグインは、バックグラウンドで動作する専用サーバーが必要です。ローカルで起動してください。[詳しくはREADMEへ](https://github.com/usoonees/logseq-whisper-subtitles-server/blob/main/README.md)",
+    "tiny, base, small, medium, large": "小さい, 標準, 少し大きい, 大きい, とても大きい"
 }

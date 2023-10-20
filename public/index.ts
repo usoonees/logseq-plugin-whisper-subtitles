@@ -41,12 +41,12 @@ async function main() {
   console.log("whisper-subtitles loaded");
   await l10nSetup({ builtinTranslations: { ja } });
   logseq.useSettingsSchema([
-    {
-      key: "whisperLocalEndpoint",
-      title: t("logseq-whisper-subtitles-server endpoint"),
-      type: "string",
-      default: "http://127.0.0.1:5014",
-      description: t("End point of logseq-whisper-subtitles-server"),
+    {//README
+      key: "headingREADME",
+      type: "heading",
+      title: "" ,
+      description: t("This plugin requires a dedicated server that runs in the background. Please start it locally. [README](https://github.com/usoonees/logseq-whisper-subtitles-server)"),
+      default: "",
     },
     {
       key: "modelSize",
@@ -54,7 +54,7 @@ async function main() {
       type: "enum",
       default: "base",
       enumChoices: ["tiny", "base", "small", "medium", "large"],
-      description: "tiny, base, small, medium, large",
+      description: t("tiny, base, small, medium, large"),
     },
     {
       key: "minLength",
@@ -62,6 +62,13 @@ async function main() {
       type: "number",
       default: 100,
       description: t("if set to zero, segments will be split by .?!, otherwise, segments less than minLength will be merged"),
+    },
+    {
+      key: "whisperLocalEndpoint",
+      title: t("End point of logseq-whisper-subtitles-server"),
+      type: "string",
+      default: "http://127.0.0.1:5014",
+      description: t("default: http://127.0.0.1:5014"),
     },
     {
       key: "zhType",
@@ -126,9 +133,10 @@ export async function runWhisper(b: IHookEvent) {
 
       }
     } catch (e: any) {
+      removePopupUI(); // remove popup
       console.log(e)
       if (e.message == "Failed to fetch") {
-        logseq.UI.showMsg(t("make sure logseq-whisper-subtitles-server is running"), "error");
+        logseq.UI.showMsg(t("Could not receive from server.\n\nMake sure \"logseq-whisper-subtitles-server\" is running"), "error");
       } else {
         logseq.UI.showMsg(t("fail to transcribe: ") + e.message, "error");
       }
