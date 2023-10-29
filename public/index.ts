@@ -6,7 +6,7 @@ import { IHookEvent } from "@logseq/libs/dist/LSPlugin.user";
 
 interface WhisperOptions {
   whisperLocalEndpoint?: string;
-  modelName?: string;
+  modelSize?: string;
   // segmentSymbols?: string[];
   minLength?: string;
   zhType?: string;
@@ -25,12 +25,12 @@ interface TranscriptionResponse {
 
 export function getWhisperSettings(): WhisperOptions {
   const whisperLocalEndpoint = logseq.settings!["whisperLocalEndpoint"];
-  const modelName = logseq.settings!["modelName"];
+  const modelSize = logseq.settings!["modelSize"];
   const minLength = logseq.settings!["minLength"];
   const zhType = logseq.settings!["zhType"];
   return {
     whisperLocalEndpoint,
-    modelName,
+    modelSize,
     // segmentSymbols,
     minLength,
     zhType,
@@ -150,7 +150,7 @@ export async function localWhisper(content: string, whisperOptions: WhisperOptio
 
   // Create a FormData object and append the file
   const formData = new FormData();
-  formData.append('model_name', whisperOptions.modelName);
+  formData.append('model_size', whisperOptions.modelSize);
   formData.append('min_length', whisperOptions.minLength);
   formData.append('text', content);
   formData.append('zh_type', whisperOptions.zhType)
